@@ -1,0 +1,12 @@
+[
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "http://addrad.io/444y2sj",
+    "name": "Bayern 2 Süd",
+    "albumart": "http://cdn-profiles.tunein.com/s24855/images/logoq.png?t=159831",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  }
+]
