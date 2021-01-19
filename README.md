@@ -17,6 +17,10 @@
 - add following lines to `/etc/rc.local`:
 
 ```bash
+    #!/bin/bash
+
+    # ...
+
     # Replace current queue for autostart with queue only containing fm4 or b2 based on the current day and time.
 
     day=$(date +%u) # day of week (1..7); 1 is monday
