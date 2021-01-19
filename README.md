@@ -14,6 +14,7 @@
 
 ## 2.2 replace queue on login
 
+- set timezone with `sudo timedatectl set-timezone Europe/Berlin`
 - add following lines to `/etc/rc.local`:
 
 ```bash
