@@ -12,40 +12,29 @@
     - `cp /data/queue /data/queue_fm4`
     - `cp /data/queue /data/queue_b2`
 
-## 2.2 replace queue on login
+## 2.2 run startup script
+
+- create startup script `startup.sh`
+- make startup script executable with `chmod +x startup.sh`
+- call startup script in `/etc/rc.local`
+
+## 2.3 startup script
 
 - activate ntp with `sudo timedatectl set-ntp True`
 - set timezone with `sudo timedatectl set-timezone Europe/Berlin`
-- add following lines to `/etc/rc.local`:
-
+- sync time with ntp server:
 ```bash
-    #!/bin/bash
-
-    # ...
-
-    # Replace current queue for autostart with queue only containing fm4 or b2 based on the current day and time.
-
-    day=$(date +%u) # day of week (1..7); 1 is monday
-
-    if [[ $day -ge 6 ]]
-    then
-        # weekends -> fm4
-        cp /data/queue_fm4 /data/queue
-    else
-        # workdays -> check time
-        time=$(date +%H:%M) # hour (00..23), minute (00..59)
-
-        if [[ "$time" < "08:30" || ("$time" > "11:30" && "$time" < "13:00") ]]
-        then
-            # early morning or noonish -> b2
-            cp /data/queue_b2 /data/queue
-        else
-            # else -> fm4
-            cp /data/queue_fm4 /data/queue
-        fi
-    fi
+    sudo systemctl stop ntp
+    sudo ntpd -q -g
+    sudo systemctl start ntp
 ```
+- get day / time
+  - `day=$(date +%u) # day of week (1..7); 1 is monday`
+  - `time=$(date +%H:%M) # hour (00..23), minute (00..59)`
+- replace queue based on date / time:
+  - `cp /data/queue_b2 /data/queue`
+  - `cp /data/queue_fm4 /data/queue`
 
-## 2.3 activate autostart
+## 2.4 activate autostart
 
 - use volumio plugin AutoStart (1.1.2) to play the queue when volumio starts

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 #
 # rc.local
 #
@@ -11,29 +11,7 @@
 #
 # By default this script does nothing.
 
-
-# Replace current queue for autostart with queue only containing fm4 or b2
-# based on the current day and time.
-
-day=$(date +%u) # day of week (1..7); 1 is monday
-
-if [[ $day -ge 6 ]]
-then
-    # weekends -> fm4
-    cp /data/queue_fm4 /data/queue
-else
-    # workdays -> check time
-    time=$(date +%H:%M) # hour (00..23), minute (00..59)
-
-    if [[ "$time" < "08:30" || ("$time" > "11:30" && "$time" < "13:00") ]]
-    then
-        # early morning or noonish -> b2
-        cp /data/queue_b2 /data/queue
-    else
-        # else -> fm4
-        cp /data/queue_fm4 /data/queue
-    fi
-fi
-
+# Run startup script
+/data/startup.sh
 
 exit 0
