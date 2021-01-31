@@ -1,12 +1,22 @@
 [
-    {
-        "service": "webradio",
-        "type": "track",
-        "uri": "http://addrad.io/444y2sj",
-        "name": "Bayern 2 Süd",
-        "albumart": "http://cdn-profiles.tunein.com/s24855/images/logoq.png?t=159831",
-        "samplerate": "",
-        "bitdepth": 0,
-        "channels": 0
-    }
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "http://addrad.io/444y2sj",
+    "name": "Bayern 2 Süd",
+    "albumart": "http://cdn-profiles.tunein.com/s24855/images/logoq.png?t=159831",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://orf-live.ors-shoutcast.at/fm4-q2a",
+    "name": "Radio FM4",
+    "albumart": "http://cdn-profiles.tunein.com/s8235/images/logoq.png?t=159965",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  }
 ]
