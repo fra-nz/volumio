@@ -48,6 +48,10 @@
   - `cp /data/queue_b2 /data/queue`
   - `cp /data/queue_fm4 /data/queue`
 
+## disable default startup volume
+
+- settings / playback options / volume options / default startup volume : disabled
+
 ## activate autostart
 
 - install and activate volumio plugin Autoplay (1.0.0) to play the queue when volumio starts
