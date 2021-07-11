@@ -8,6 +8,14 @@
 ## restore configuration
 
 - install plugin "Backup & Restore" to restore configuration
+
+### backup
+
+- use plugin to create backup of the configuration (optional: also select playlist and favourites)
+- backup `volumio_data.tgz` from volumio samba share `smb://<volumio-ip>/internal%20storage/`
+
+### restore
+
 - copy `volumio_data.tgz` to volumio samba share `smb://<volumio-ip>/internal%20storage/`
 - restore configuration in plugin
 
