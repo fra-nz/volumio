@@ -36,9 +36,9 @@ else
         volumio volume 70
     elif [[ "$time" > "11:30" && "$time" < "13:00" ]]
     then
-        echo "workday noonish -> b2 (volume 80)" >> /data/startup.log
+        echo "workday noonish -> b2 (volume 90)" >> /data/startup.log
         cp /data/queue_b2 /data/queue
-        volumio volume 80
+        volumio volume 90
     else
         echo "workday else -> fm4 (volume 60)" >> /data/startup.log
         cp /data/queue_fm4 /data/queue
