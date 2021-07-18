@@ -55,10 +55,9 @@
 - replace queue based on date / time:
   - `cp /data/queue_b2 /data/queue`
   - `cp /data/queue_fm4 /data/queue`
-
-## disable default startup volume
-
-- settings / playback options / volume options / default startup volume : disabled
+- update startup volume based on date / time:
+  - update `/data/configuration/audio_interface/alsa_controller/config.json`: volumestart.value
+  - workaround: additionally set volume after a delay via volumio command to update ui
 
 ## activate autostart
 
