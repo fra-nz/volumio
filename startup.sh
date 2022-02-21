@@ -1,17 +1,8 @@
 #!/bin/bash
 
-# Define module-global logfile
+# Create fresh log file
 LOG_FILE="/data/startup.log"
-
-# Function to set the volume via the volumio command in order to update UI:
-# $1: Volume level
-function fix_volume_ui {
-    VOLUME=$1
-
-    echo "fix volume ui -> ${VOLUME}" >> ${LOG_FILE}
-
-    volumio volume ${VOLUME}
-}
+echo "startup ..." > ${LOG_FILE}
 
 # Function to set the startup volume in the corresponding config file:
 # $1: Startup volume level
@@ -21,64 +12,94 @@ function set_startup_volume {
     local CONFIG_FILE="/data/configuration/audio_interface/alsa_controller/config.json"
     local CONFIG_TMP_FILE="/data/configuration/audio_interface/alsa_controller/config.json.tmp"
 
-    echo "startup volume -> ${VOLUME}" >> ${LOG_FILE}
+    echo "set startup volume -> ${VOLUME}" >> ${LOG_FILE}
 
     jq ".volumestart.value = \"${VOLUME}\"" ${CONFIG_FILE} > ${CONFIG_TMP_FILE} && mv ${CONFIG_TMP_FILE} ${CONFIG_FILE}
-
-    # WORKAROUND: additionally set volume after a delay via volumio command to update UI
-    sleep 30 && fix_volume_ui ${VOLUME} &
 }
 
-# Create fresh log
-echo "startup ..." > ${LOG_FILE}
+# Function to select sender in queue, set the volume and start playback via the volumio command:
+# $1: Sender {FM4, B2}
+# $1: Volume level
+function start_playback {
+    SENDER=$1
+    VOLUME=$2
 
-# Sync current date and time
-sudo timedatectl set-ntp True
-sudo timedatectl set-timezone Europe/Berlin
+    echo "start playback of ${SENDER} with volume ${VOLUME}" >> ${LOG_FILE}
 
-sudo systemctl stop ntp >> ${LOG_FILE}
-sudo ntpd -q -g >> ${LOG_FILE}
-sudo systemctl start ntp >> ${LOG_FILE}
+    volumio volume ${VOLUME}
+
+    if [[ "${SENDER}" == "FM4" ]]
+    then
+
+        # first title in queue is already selected, nothing to do
+        :
+
+    elif [[ "${SENDER}" == "B2" ]]
+    then
+
+        # select second title in queue
+        volumio next
+
+    else
+
+        echo "Error: Sender is not B2 or FM4." >> ${LOG_FILE}
+
+    fi
+
+    volumio play
+}
+
+# Set startup volume in configuration
+set_startup_volume 60
+# Overwrite queue
+cp /data/queue_fm4_b2 /data/queue
+
+# Let volumio start up
+sleep 55
 
 # Get current date and time
-date >> ${LOG_FILE}
+TIME_API_URL="http://worldtimeapi.org/api/ip.txt"
+UNIXTIME=$(curl -silent ${TIME_API_URL} | grep "^unixtime" | cut -d " " -f 2)
 
-day=$(date +%u) # day of week (1..7); 1 is monday
+date -d @${UNIXTIME} >> ${LOG_FILE}
+
+day=$(date -d @${UNIXTIME} +%u) # day of week (1..7); 1 is monday
 echo day:  $day >> ${LOG_FILE}
 
-time=$(date +%H:%M) # hour (00..23), minute (00..59)
+time=$(date -d @${UNIXTIME} +%H:%M) # hour (00..23), minute (00..59)
 echo time: $time >> ${LOG_FILE}
 
-# Set autostart queue and volume
-# Based on the current day and time replace current queue with pre-defined queue (fm4 or b2) and set
-# adjusted volume level.
+# Set sender and volume based on the current day and time
 if [[ $day -ge 6 ]]
 then
 
-    echo "weekends -> fm4" >> ${LOG_FILE}
-    cp /data/queue_fm4 /data/queue
-    set_startup_volume 60
+    SENDER="FM4"
+    VOLUME=60
+    echo "weekends -> ${SENDER}, ${VOLUME}" >> ${LOG_FILE}
 
 else
     if [[ "$time" < "08:30" ]]
     then
 
-        echo "workday early morning -> b2" >> ${LOG_FILE}
-        cp /data/queue_b2 /data/queue
-        set_startup_volume 70
+        SENDER="B2"
+        VOLUME=70
+        echo "workday early morning -> ${SENDER}, ${VOLUME}" >> ${LOG_FILE}
 
     elif [[ "$time" > "11:30" && "$time" < "13:00" ]]
     then
 
-        echo "workday noonish -> b2" >> ${LOG_FILE}
-        cp /data/queue_b2 /data/queue
-        set_startup_volume 90
+        SENDER="B2"
+        VOLUME=90
+        echo "workday noonish -> ${SENDER}, ${VOLUME}" >> ${LOG_FILE}
 
     else
 
-        echo "workday else -> fm4" >> ${LOG_FILE}
-        cp /data/queue_fm4 /data/queue
-        set_startup_volume 60
+        SENDER="FM4"
+        VOLUME=60
+        echo "workday else -> ${SENDER}, ${VOLUME}" >> ${LOG_FILE}
 
     fi
 fi
+
+# Start playback via volumio command
+start_playback ${SENDER} ${VOLUME}

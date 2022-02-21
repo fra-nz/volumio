@@ -11,6 +11,8 @@
 #
 # By default this script does nothing.
 
+[ -d /etc/boot.d ] && run-parts /etc/boot.d
+
 # Run startup script
 /data/startup.sh
 
