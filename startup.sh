@@ -55,7 +55,7 @@ set_startup_volume 60
 cp /data/queue_fm4_b2 /data/queue
 
 # Let volumio start up
-sleep 55
+sleep 60
 
 # Get current date and time
 TIME_API_URL="http://worldtimeapi.org/api/ip.txt"
