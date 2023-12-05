@@ -1,22 +1,63 @@
 [
-    {
-        "service": "webradio",
-        "type": "track",
-        "uri": "https://orf-live.ors-shoutcast.at/fm4-q2a",
-        "name": "ORF Radio FM4",
-        "albumart": "http://cdn-profiles.tunein.com/s8235/images/logoq.jpg?t=119",
-        "samplerate": "",
-        "bitdepth": 0,
-        "channels": 0
-      },
-      {
-        "service": "webradio",
-        "type": "track",
-        "uri": "https://dispatcher.rndfnk.com/br/br2/sued/mp3/mid?aggregator=tunein",
-        "name": "Bayern 2 Süd",
-        "albumart": "http://cdn-profiles.tunein.com/s24855/images/logoq.png?t=159831",
-        "samplerate": "",
-        "bitdepth": 0,
-        "channels": 0
-    }
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://orf-live.ors-shoutcast.at/fm4-q2a",
+    "name": "ORF Radio FM4",
+    "albumart": "http://cdn-profiles.tunein.com/s8235/images/logoq.jpg?t=119",
+    "samplerate": "",
+    "bitdepth": "",
+    "channels": 0,
+    "trackType": "webradio"
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://dispatcher.rndfnk.com/br/br2/sued/mp3/mid?aggregator=tunein",
+    "name": "Bayern 2 Süd",
+    "albumart": "http://cdn-profiles.tunein.com/s24855/images/logoq.png?t=159831",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://dispatcher.rndfnk.com/br/br1/obb/mp3/low?aggregator=tunein",
+    "name": "Bayern 1",
+    "albumart": "http://cdn-profiles.tunein.com/s24854/images/logoq.png?t=159831",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://dispatcher.rndfnk.com/br/br24/live/mp3/mid?aggregator=tunein",
+    "name": "BR24",
+    "albumart": "http://cdn-profiles.tunein.com/s24903/images/logoq.png?t=1",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://dispatcher.rndfnk.com/br/puls/live/mp3/mid?aggregator=tunein",
+    "name": "PULS",
+    "albumart": "http://cdn-profiles.tunein.com/s44976/images/logoq.png?t=1",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  },
+  {
+    "service": "webradio",
+    "type": "track",
+    "uri": "https://streams.egofm.de/egoFM-hq",
+    "name": "egoFM",
+    "albumart": "http://cdn-profiles.tunein.com/s96182/images/logoq.png?t=1",
+    "samplerate": "",
+    "bitdepth": 0,
+    "channels": 0
+  }
 ]
